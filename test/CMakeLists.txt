@@ -1,3 +1,5 @@
+message(STATUS "Configuring tests")
+
 enable_testing()
 
 set(TEST_TARGETS

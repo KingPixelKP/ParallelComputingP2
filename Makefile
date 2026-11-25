@@ -51,3 +51,9 @@ build_pipeline: configure ## Build the block_forward target for the pipeline
 	@echo "Building target block_forward using $(NUM_CORES) cores..."
 	cmake --build build $(CMAKE_BUILD_FLAGS) --target block_forward | tee logs/build_block_forward.log
 	@echo "Target block_forward build completed."
+
+test: build ## Run tests
+	@echo "Running tests..."
+# Find all _test in bin
+	@find bin -type f -name '*_test' -exec {} \; | tee logs/test.log
+	@echo "Tests completed."

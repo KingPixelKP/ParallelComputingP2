@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.18)
 project(compar-project2 LANGUAGES CXX CUDA)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 ##############################################################
 # Autodetect CUDA architecture(s)

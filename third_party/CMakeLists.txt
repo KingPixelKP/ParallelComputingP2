@@ -1,3 +1,4 @@
+message(STATUS "Configuring third party libraries")
 
 set (THIRD_PARTY_DIR ${CMAKE_SOURCE_DIR}/third_party)
 
