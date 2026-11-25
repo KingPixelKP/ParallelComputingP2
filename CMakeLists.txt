@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.18)
 project(compar-project2 LANGUAGES CXX CUDA)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 17)
 
 ##############################################################
 # Autodetect CUDA architecture(s)
@@ -51,6 +52,8 @@ set_target_properties(reference PROPERTIES EXCLUDE_FROM_ALL TRUE)
 # Tests
 ##############################################################
 
+enable_testing()
+include(GoogleTest)
 add_subdirectory(third_party)
 include_directories(${GTEST_HOME}/googletest/include)
 add_subdirectory (test)

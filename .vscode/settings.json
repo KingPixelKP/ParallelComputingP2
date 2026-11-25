@@ -5,6 +5,5 @@
         "--clang-tidy",
         "--header-insertion=iwyu",
         "--completion-style=detailed",
-        "-j=4"
     ]
 }

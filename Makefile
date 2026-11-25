@@ -1,4 +1,6 @@
 CUDA_CHECK ?= OFF
+CXX_COMPILER ?= g++-10
+CUDA_COMPILER ?= nvcc
 
 ifneq ($(CUDA_CHECK), OFF)
     $(info Building with CUDA checks enabled.)
@@ -12,8 +14,12 @@ NUM_CORES := $(shell nproc)
 CMAKE_CONFIG_FLAGS := -DCMAKE_BUILD_TYPE=Release \
 					   -G "Unix Makefiles" \
 					   -DCMAKE_CUDA_FLAGS="$(CUDA_FLAGS)" \
-					   -DCMAKE_CXX_FLAGS="$(CUDA_FLAGS)"
-CMAKE_BUILD_FLAGS := -j$(NUM_CORES)
+					   -DCMAKE_CXX_FLAGS="$(CUDA_FLAGS)" \
+					   -DCMAKE_CXX_COMPILER=$(CXX_COMPILER) \
+					   -DCMAKE_CUDA_COMPILER=$(CUDA_COMPILER) \
+					   -DCMAKE_CUDA_HOST_COMPILER=$(CXX_COMPILER)
+
+CMAKE_BUILD_FLAGS := -j$(NUM_CORES) 
 
 .PHONY: all clean clean_logs clean_build configure build build_pipeline help
 .DEFAULT_GOAL := help
@@ -55,5 +61,11 @@ build_pipeline: configure ## Build the block_forward target for the pipeline
 test: build ## Run tests
 	@echo "Running tests..."
 # Find all _test in bin
-	@find bin -type f -name '*_test' -exec {} \; | tee logs/test.log
+	cd build && ctest --output-on-failure | tee ../logs/test.log
 	@echo "Tests completed."
+
+test_check: CUDA_CHECK ?= ON
+test_check: build ## Run tests with CUDA checks enabled
+	@echo "Running tests with CUDA checks enabled..."
+	cd build && ctest --output-on-failure | tee ../logs/test_check.log
+	@echo "Tests with CUDA checks completed."
