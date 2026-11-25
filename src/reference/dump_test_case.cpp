@@ -2,9 +2,7 @@
 //
 // Dumps small, fixed-seed random test cases and the reference
 // implementation's outputs for each op to validate/data/*.txt.
-// validate/verify_reference.py then independently recomputes each op
-// with numpy and compares against these dumped outputs. Run both with
-// `make validate` -- no CUDA toolkit or GPU required for this target.
+
 #include <cstdlib>
 #include <fstream>
 #include <iomanip>

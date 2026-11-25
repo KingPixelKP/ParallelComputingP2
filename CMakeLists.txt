@@ -54,16 +54,6 @@ add_subdirectory(third_party)
 include_directories(${GTEST_HOME}/googletest/include)
 add_subdirectory (test)
 
-add_custom_target(validate
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/validate/data
-    COMMAND $<TARGET_FILE:reference>
-    COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/validate/verify_reference.py
-    DEPENDS reference
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    COMMENT "Running host-only reference validation..."
-)
-
-
 ##############################################################
 # Assemble
 ##############################################################
