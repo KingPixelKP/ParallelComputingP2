@@ -7,7 +7,7 @@
 #include "reference.h"
 
 void attention_forward_test(const int version) {
-    int B = 8, T = 128, NH = 4, HS = 64; // C = 256, matches the assignment's reference model
+    int B = 8, T = 256, NH = 4, HS = 64; // C = 256, matches the assignment's reference model
     int C = NH * HS;
     int N = B * T * C;
     srand(1234);
