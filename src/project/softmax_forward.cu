@@ -8,7 +8,24 @@
 
 
 __global__ void softmax_forward_kernel(float* out, const float* inp, int rows, int C) {
-
+    int ii = blockIdx.x * blockDim.x + threadIdx.x;
+  
+    if (ii < rows) {
+      const float *x = inp + static_cast<size_t>(ii) * C;
+      float *y = out + static_cast<size_t>(ii) * C;
+      float maxv = x[0];
+      for (int c = 1; c < C; c++)
+        if (x[c] > maxv)
+          maxv = x[c];
+      float sum = 0.0f;
+      for (int c = 0; c < C; c++) {
+        float e = std::exp(x[c] - maxv);
+        y[c] = e;
+        sum += e;
+      }
+      for (int c = 0; c < C; c++)
+        y[c] /= sum;
+    }
 }
 
 void softmax_forward(int version, float* d_out, const float* d_inp, int rows, int C) {
